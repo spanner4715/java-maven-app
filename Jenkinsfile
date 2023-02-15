@@ -18,14 +18,16 @@ pipeline {
                 }
             }
         }
-        stage("build image") {
+        stage("build and push image") {
             steps {
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                    buildImage 'spanner/demo-app:jma-3.0'
+                    dockerLogin()
+                    dockerPush 'spanner/demo-app:jma-3.0'
                 }
             }
         }
+
         stage("deploy") {
             steps {
                 script {
